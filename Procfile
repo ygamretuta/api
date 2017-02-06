@@ -1,0 +1,1 @@
+web: gunicorn ygam.wsgi --log-file -
