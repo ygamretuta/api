@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
-DEBUG = True
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-en*4tyese#k$px&zc(pyfql=m(so_ozq3!^0u6jb0r2&_9q+$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -71,15 +69,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ygam.wsgi.application'
-
-if not DEBUG:
-  import dj_database_url
-  db_from_env = dj_database_url.config(conn_max_age=500)
-  DATABASES['default'].update(db_from_env)
-
-  STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-  DEBUG = False
-  SECRET_KEY = os.environ['SECRET_KEY']
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -140,6 +129,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES = {
+  'default': db_from_env
+}
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+if 'SECRET_KEY' in os.environ :
+  SECRET_KEY = os.environ['SECRET_KEY']
 
 try:
   from local_settings import *
