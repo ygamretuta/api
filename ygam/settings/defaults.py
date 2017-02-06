@@ -69,15 +69,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ygam.wsgi.application'
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ygam',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-    }
-}
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
