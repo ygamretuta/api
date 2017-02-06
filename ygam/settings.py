@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+DEBUG = True
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -69,6 +71,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ygam.wsgi.application'
+
+if not DEBUG:
+  import dj_database_url
+  db_from_env = dj_database_url.config(conn_max_age=500)
+  DATABASES['default'].update(db_from_env)
+
+  STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+  DEBUG = False
+  SECRET_KEY = os.environ['SECRET_KEY']
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -129,3 +140,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+try:
+  from local_settings import *
+except ImportError:
+  pass
