@@ -25,7 +25,8 @@ SECRET_KEY = '-en*4tyese#k$px&zc(pyfql=m(so_ozq3!^0u6jb0r2&_9q+$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
