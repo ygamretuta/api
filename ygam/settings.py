@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,9 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-en*4tyese#k$px&zc(pyfql=m(so_ozq3!^0u6jb0r2&_9q+$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -39,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'bookmark',
+    'taggit'
 ]
 
 MIDDLEWARE = [
@@ -131,7 +131,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES = {
   'default': db_from_env
@@ -139,10 +138,12 @@ DATABASES = {
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-if 'SECRET_KEY' in os.environ :
-  SECRET_KEY = os.environ['SECRET_KEY']
+TAGGIT_CASE_INSENSITIVE = True
+
+if 'SECRET_KEY' in os.environ:
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 try:
-  from local_settings import *
+    from local_settings import *
 except ImportError:
-  pass
+    pass

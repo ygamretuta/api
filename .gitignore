@@ -18,3 +18,4 @@ build/
 tests/report/
 .vscode
 local_settings.py
+.idea/
