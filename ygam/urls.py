@@ -18,6 +18,8 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 from rest_framework import routers, serializers, viewsets
 
+from bookmark.models import Bookmark
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -25,12 +27,24 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email', 'is_staff')
 
 
+class BookmarkSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Bookmark
+        fields = ('title', 'url', 'link')
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
+class BookmarkViewSet(viewsets.ModelViewSet):
+    queryset = Bookmark.objects.all()
+    serializer_class = BookmarkSerializer
+
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'bookmarks', BookmarkViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
